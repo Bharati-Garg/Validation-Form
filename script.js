@@ -27,25 +27,44 @@ function validateInput() {
   }
 
   //password
-  if(pwd.value.trim()===""){
-      onError(pwd,"password cannot be empty");
-   }
+  if (pwd.value.trim() === "") {
+    onError(pwd, "password cannot be empty");
+  } else {
+    onSuccess(pwd);
+  }
 
-  else{
-       onSuccess(pwd);
-    }
-
-
-    //confirm password
+  //confirm password
   if (conPwd.value.trim() === "") {
     onError(conPwd, "password cannot be empty");
   } else {
-     if(pwd.value.trim() !== conPwd.value.trim()) {
+    if (pwd.value.trim() !== conPwd.value.trim()) {
       onError(conPwd, "Password & Confirm password not matching");
     } else {
       onSuccess(conPwd);
+
+      const formData = {
+        username: userName.value,
+        email: email.value,
+        password: pwd.value,
+        confirmPassword: conPwd.value,
+      };
+
+      formValues.push(formData);
+      form.reset();
+
       alert("form submitted successfully!");
       console.log("Form Inputs:", formValues);
+
+      //add form control class
+      const usernameClass = txtUserName.parentElement;
+      const emailClass = txtEmail.parentElement;
+      const passwordClass = txtPwd.parentElement;
+      const password2Class = txtConPwd.parentElement;
+
+      usernameClass.className = "form-control";
+      emailClass.className = "form-control";
+      passwordClass.className = "form-control";
+      password2Class.className = "form-control";
     }
   }
 }
@@ -53,20 +72,7 @@ function validateInput() {
 document.querySelector("button").addEventListener("click", (event) => {
   event.preventDefault();
   validateInput();
-
-  const formData = {
-    username: userName.value,
-    email: email.value,
-    password: pwd.value,
-    confirmPassword: conPwd.value
-  };
-
-  formValues.push(formData);
-  
 });
-    
- 
-
 
 function onSuccess(input) {
   let parent = input.parentElement;
@@ -90,3 +96,5 @@ function isValidEmail(email) {
     email
   );
 }
+
+
